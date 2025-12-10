@@ -1,0 +1,293 @@
+/* src/App.css */
+
+/* --- 1. VARIABLES GLOBALES --- */
+:root {
+  --bg-color: #f3f4f6;       /* Gris Neutro */
+  --card-bg: #ffffff;        /* Blanco Puro */
+  --text-main: #111827;      /* Negro Suave */
+  --text-light: #6b7280;     /* Gris Texto */
+  --accent: #2563eb;         /* Azul Eléctrico */
+  --danger: #dc2626;         /* Rojo Alerta */
+  --radius: 12px;            /* Curvatura */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- 2. ESTRUCTURA (SHELL) --- */
+.app-shell {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  color: var(--text-main);
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+/* Layout Responsivo (Grid) */
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .main-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Mitad y Mitad */
+    align-items: start;
+  }
+}
+
+.panel {
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* --- 3. MONITOR ZOHAR --- */
+.monitor-header {
+  text-align: center;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 0.5rem;
+}
+
+.display-area {
+  background-color: #f9fafb;
+  border: 2px dashed #d1d5db;
+  border-radius: var(--radius);
+  padding: 1rem;
+  min-height: 120px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  /* LEY DE GRAVEDAD HEBREA (RTL) */
+  direction: rtl; 
+  justify-content: flex-start; 
+  align-content: flex-start;
+}
+
+.char-card {
+  position: relative;
+  width: 45px;
+  height: 60px;
+  background: white;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.char-aura {
+  position: absolute;
+  top:0; left:0; width: 100%; height: 100%;
+  opacity: 0.25;
+  z-index: 0;
+}
+
+.char-symbol {
+  font-family: 'Times New Roman', serif;
+  font-size: 1.6rem;
+  font-weight: bold;
+  z-index: 1;
+  line-height: 1;
+}
+
+.char-val {
+  font-size: 0.6rem;
+  font-weight: 700;
+  z-index: 1;
+  margin-top: 2px;
+  color: #555;
+}
+
+.raw-text {
+  margin-top: 1rem;
+  text-align: center;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.5rem;
+  direction: rtl;
+  padding: 0.5rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  letter-spacing: 1px;
+}
+
+/* --- 4. TECLADO --- */
+.keyboard-title {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.keys-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 1.5rem;
+}
+
+.key-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  /* INVERSIÓN VISUAL: Aleph a la derecha */
+  flex-direction: row-reverse; 
+}
+
+.hebrew-btn {
+  flex: 1;
+  height: 50px;
+  font-family: 'Times New Roman', serif;
+  font-size: 1.4rem;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: background 0.1s;
+}
+
+.hebrew-btn:active {
+  background-color: #e5e7eb;
+}
+
+.controls-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 8px;
+}
+
+.control-btn {
+  height: 48px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.space-btn { background: #e5e7eb; color: var(--text-main); }
+.delete-btn { background: #fee2e2; color: var(--danger); }
+.clear-btn { background: var(--danger); color: white; }
+
+.process-btn {
+  width: 100%;
+  margin-top: 1rem;
+  height: 50px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+}
+
+.process-btn:active {
+  transform: translateY(1px);
+}
+
+/* --- 5. TABLA DE ANÁLISIS --- */
+.analysis-container {
+  margin-top: 2rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.analysis-title {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f3f4f6;
+  padding-bottom: 0.5rem;
+}
+
+.miluy-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.miluy-table th {
+  background: #f9fafb;
+  padding: 10px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+
+.miluy-table td {
+  padding: 10px;
+  border-bottom: 1px solid #f3f4f6;
+  font-family: monospace;
+}
+
+.level-cell { font-weight: bold; }
+.value-cell { color: var(--accent); font-weight: bold; }
+.reduced-cell { color: var(--danger); font-weight: 900; font-size: 1rem; }
+
+.summary-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  text-align: center;
+  color: #1e40af;
+}
+
+.final-number {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
