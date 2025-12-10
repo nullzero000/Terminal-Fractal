@@ -77,3 +77,23 @@ export const KEYBOARD_LAYOUT = [
   "כלמנסעפצקר",
   "שת"
 ];
+// Ejemplo de expansión de datos para 3 letras clave
+export const HEBREW_DATA_UPDATE = {
+  // ... resto de datos ...
+  'ג': { 
+    // ... datos previos ...
+    axiom_struct: 'Ley de Movimiento: El dinero estancado se pudre. Invierte o circula recursos hoy.',
+    axiom_bond: 'Ley de la Dádiva: No esperes retorno. Da lo que te sobra para vaciar el espacio.'
+  },
+  'ד': { 
+    // ... datos previos ...
+    axiom_struct: 'Ley de la Puerta: Si hay resistencia, no empujes. Busca la llave (conocimiento) o cambia de puerta.',
+    axiom_bond: 'Ley de la Humildad: Anula tu necesidad de tener razón. Escucha para recibir, no para responder.'
+  },
+  'מ': { 
+    // ... datos previos ...
+    axiom_struct: 'Ley de Gestación: No reveles el proyecto antes de tiempo. El silencio acumula potencia.',
+    axiom_bond: 'Ley de la Matriz: Contén la emoción del otro sin ahogarte en ella. Sé el vaso, no el agua.'
+  }
+  // ... Se debe completar para las 22 letras.
+};

@@ -1,76 +1,33 @@
-import { useState } from 'react';
-import HebrewKeyboard from './components/HebrewKeyboard';
-import ZoharMonitor from './components/ZoharMonitor';
-import AnalysisTable from './components/AnalysisTable';
+// src/App.jsx (Simplificado)
+import React, { useState, useEffect } from 'react';
 import { calculateMiluyLevels } from './utils/calculations';
-import './App.css'; // Importación crítica de estilos
+import { analyzeFrequencyAndColor } from './utils/spectralEngine';
+import TacticalReadout from './components/TacticalReadout'; // <--- IMPORTAR
+// ... otros imports (Keyboard, etc)
 
 function App() {
-  // Estado 1: El texto que se escribe
-  const [inputText, setInputText] = useState("");
-  // Estado 2: Los resultados del cálculo (se generan solo al procesar)
-  const [analysisData, setAnalysisData] = useState(null);
+  const [input, setInput] = useState('');
+  const [analysis, setAnalysis] = useState(null);
 
-  // --- MANEJADORES DE ENTRADA ---
-  const handleAdd = (char) => {
-    setInputText((prev) => prev + char);
-    setAnalysisData(null); // Si cambias el texto, borramos la tabla vieja
-  };
-
-  const handleSpace = () => setInputText((prev) => prev + " ");
-  
-  const handleBackspace = () => {
-    setInputText((prev) => prev.slice(0, -1));
-    setAnalysisData(null);
-  };
-
-  const handleClear = () => {
-    setInputText("");
-    setAnalysisData(null);
-  };
-
-  // --- PROCESAMIENTO ---
-  const handleProcess = () => {
-    if (!inputText.trim()) return;
-    // Llamamos al cerebro matemático
-    const results = calculateMiluyLevels(inputText, 5);
-    setAnalysisData(results);
-  };
+  // Efecto para recalcular en tiempo real
+  useEffect(() => {
+    const levels = calculateMiluyLevels(input, 5);
+    // Extraemos todas las letras generadas en todos los niveles para el análisis espectral
+    const allChars = levels.flatMap(l => l.chars);
+    const result = analyzeFrequencyAndColor(allChars);
+    setAnalysis(result);
+  }, [input]);
 
   return (
-    <div className="app-shell">
-      <header>
-        <h1>EJE-13 / SUPRAMENTE</h1>
-        <p>Terminal Fractal (Miluy & Gematria)</p>
-      </header>
+    <div style={{ background: '#050505', minHeight: '100vh', color: '#fff', padding: '20px' }}>
+      {/* 1. Input / Teclado aquí */}
+      
+      {/* 2. Visualización High-End */}
+      {analysis && (
+        <TacticalReadout data={analysis} />
+      )}
 
-      <main className="main-layout">
-        
-        {/* COLUMNA 1: VISUALIZACIÓN */}
-        <section className="panel">
-          <ZoharMonitor inputString={inputText} />
-          
-          {/* La tabla solo aparece si analysisData tiene datos */}
-          {analysisData && (
-            <AnalysisTable levels={analysisData} />
-          )}
-        </section>
-
-        {/* COLUMNA 2: CONTROL */}
-        <section className="panel">
-          <HebrewKeyboard 
-            onAdd={handleAdd} 
-            onSpace={handleSpace} 
-            onBackspace={handleBackspace} 
-            onClear={handleClear}
-          />
-          
-          <button onClick={handleProcess} className="process-btn">
-            ⚡ PROCESAR ESTRUCTURA
-          </button>
-        </section>
-
-      </main>
+      {/* 3. Tablas de datos crudos (opcional, debajo) */}
     </div>
   );
 }
